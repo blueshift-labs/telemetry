@@ -47,7 +47,8 @@ list_for_event(EventName) ->
     try
         ets:lookup(?MODULE, EventName)
     catch
-        error:badarg ->
+        error:badarg:Stacktrace ->
+            erlang:display(Stacktrace),
             ?LOG_WARNING("Failed to lookup telemetry handlers. "
                          "Ensure the telemetry application has been started. ", []),
             []
